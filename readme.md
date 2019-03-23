@@ -13,6 +13,7 @@ npm start
   "showTime":"12:00",
   "exchange":"Penukaran tiket 10:30",
   "title":"Sambil Menggandeng Erat Tanganku",
+  "team":"Team T",
   "order":{
     "VIP":{
       "start":"Senin, 25.3.2019 00:00 WIB",

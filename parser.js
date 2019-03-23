@@ -65,14 +65,64 @@ const getMember = member => {
   const tr = getTrTag(member)
   const main = tr.slice(1)
   main.forEach((m, i) => {
-    const dataMain = splitBy(removeTag(replaceTrailingTd(replaceBr(m))), '\n')
+    const splitData = replaceTrailingTd(replaceBr(m))
+    const dataMain = splitBy(removeTag(splitData), '\n')
     obj.showDate = dataMain[0].split(' ').slice(0, 2).join(' ')
     obj.showTime = dataMain[0].split(' ').pop()
     obj.title = dataMain[1][0] == ' ' ? dataMain[1].slice(1) : dataMain[1]
+    obj.team = teamParser(splitData)
     obj.showMember = dataMain[2].split(',').slice(0, -1)
     result.push(obj)
     obj = {}
   })
+  return result
+}
+
+const teamParser = raw => {
+  const getImg = splitBy(raw, "\n")[1]
+    .match(/(?<=src=").*?(?=[\?"])/g)[0]
+    .split('.')[1]
+  let result = 'Unknown'
+  switch (getImg) {
+    case 'team12':
+      result = 'Academy A'
+      break;
+    case 'team11':
+      result = 'Academy A'
+      break;
+    case 'team10':
+      result = 'Trainee'
+      break;
+    case 'team9':
+      result = 'Trainee'
+      break;
+    case 'team8':
+      result = 'Team Bunga Matahari'
+      break;
+    case 'team7':
+      result = 'Dream Team'
+      break;
+    case 'team6':
+      result = 'Kandidat Trainee'
+      break;
+    case 'team5':
+      result = 'Team T'
+      break;
+    case 'team4':
+      result = 'Theater'
+      break;
+    case 'team3':
+      result = 'Trainee'
+      break;
+    case 'team2':
+      result = 'Team KIII'
+      break;
+    case 'team1':
+      result = 'Team J'
+      break;
+    default:
+      break;
+  }
   return result
 }
 
