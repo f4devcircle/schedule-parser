@@ -14,11 +14,16 @@ axios.get('https://jkt48.com/theater/schedule?lang=id')
   const perform = getShow(cleanString(table[0]))
   const members = getMember(cleanString(table[1]))
   const show = []
+  let result = {}
   perform.forEach((p, i) => {
-    show.push({
-      ...p,
-      ...members[i]
-    })
+    for(let key in p){
+      result[key] = p[key]
+    }
+    for(let key in members[i]){
+      result[key] = members[i][key];
+    }
+    show.push(result)
+    result = {}
   })
 
   console.log(show)

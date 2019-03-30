@@ -68,7 +68,7 @@ const getMember = member => {
   main.forEach((m, i) => {
     const splitData = replaceTrailingTd(replaceBr(m))
     const dataMain = splitBy(removeTag(splitData), '\n')
-    const parseImgIcon = splitData.match(/(?<=src=").*?(?=[\?"])/g)
+    const parseImgIcon = splitData.match(/<img[^>]+src="([^">]+)"/g)
     const isEvent = parseImgIcon.length > 1
     obj.showDate = dataMain[0].split(' ').slice(0, 2)[1]
     obj.showTime = dataMain[0].split(' ').pop()
@@ -150,7 +150,7 @@ const eventParser = eventRaw => {
 
 const teamParser = raw => {
   const getImg = splitBy(raw, "\n")[1]
-    .match(/(?<=src=").*?(?=[\?"])/g)[0]
+    .match(/<img[^>]+src="([^">]+)"/g)[0]
     .split('.')[1]
   let result = 'Unknown'
   switch (getImg) {
