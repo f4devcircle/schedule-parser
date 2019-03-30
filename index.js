@@ -20,7 +20,7 @@ axios.get('https://jkt48.com/theater/schedule?lang=id')
       ...members[i]
     })
   })
-  
+
   console.log(show)
 })
 .catch(err => {

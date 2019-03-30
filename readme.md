@@ -9,26 +9,27 @@ npm start
 ## Model Result Example
 ```
 {
-  "showDate":"Minggu, 31.3.2019",
-  "showTime":"12:00",
-  "exchange":"Penukaran tiket 10:30",
-  "title":"Sambil Menggandeng Erat Tanganku",
-  "team":"Team T",
-  "order":{
-    "VIP":{
-      "start":"Senin, 25.3.2019 00:00 WIB",
-      "end":"Minggu, 31.3.2019 12:00 WIB"
+  "showDay": "Minggu",
+  "showDate": "7.4.2019",
+  "showTime": "16:00",
+  "exchangeTime": "13:00",
+  "title": "Sambil Menggandeng Erat Tanganku",
+  "order": {
+    "VIP": {
+      "start": "Senin, 1.4.2019 00:00 WIB",
+      "end": "Minggu, 7.4.2019 16:00 WIB"
     },
-    "OFC":{
-      "start":"Senin, 25.3.2019 00:00 WIB",
-      "end":"Minggu, 31.3.2019 12:00 WIB"
+    "OFC": {
+      "start": "Senin, 1.4.2019 00:00 WIB",
+      "end": "Minggu, 7.4.2019 16:00 WIB"
     },
-    "GENERAL":{
-      "start":"Kamis, 28.3.2019 00:00 WIB",
-      "end":"Minggu, 31.3.2019 12:00 WIB"
+    "GENERAL": {
+      "start": "Kamis, 4.4.2019 00:00 WIB",
+      "end": "Minggu, 7.4.2019 16:00 WIB"
     }
   },
-  "showMember":[
+  "team": "Team T",
+  "showMember": [
     "Adhisty Zara",
     "Adriani Elisabeth",
     "Ayana Shahab",
@@ -44,7 +45,10 @@ npm start
     "Syahfira Angela Nurhaliza",
     "Tan Zhi Hui Celine",
     "Thalia Ivanka Elizabeth"
-  ]
+  ],
+  "isEvent": false,
+  "eventName": "",
+  "eventMember": ""
 }
 ```
 
