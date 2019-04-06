@@ -5,6 +5,7 @@ const replaceAlamatHadiahDiv = td => td.replace(/(<p><div class="readmore"><a hr
 const cleanString = tabbed => tabbed.replace(/\t/g, '').replace(/\n/g, '')
 const getTableTag = table => table.match(/(<table[^>]*>(?:.|\n)*?<\/table>)/g)
 const getMainContent = divs => divs.match(/(<div id="mainContent"[^>]*>(?:.|\n)*?<\/div><!--end #mainCol-->)/g)
+const getBiodata = divs => divs.match(/<div.*class\s*=\s*["'].*bio.*["']\s*>(.*)<\/div>/g);
 const getTrTag = tr => tr.match(/<tr[\s\S]*?<\/tr>/g)
 const getTdTag = td => td.match(/<td[\s\S]*?<\/td>/g)
 const getDivTag = div => div.match(/<div[\s\S]*?<\/div>/g)
@@ -24,4 +25,5 @@ module.exports = {
   getDivTag,
   replaceBr,
   splitBy,
-}
+  getBiodata,
+};
