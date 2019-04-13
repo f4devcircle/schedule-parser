@@ -15,22 +15,22 @@ const getShow = data => {
   main.forEach((m, i) => {
     const dataMain = getTdTag(m)
     //first
-    if (i % 3 == 0) {
+    if (i % 3 === 0) {
       let key = ''
       dataMain.forEach((t, j) => {
         // first
-        if (j == 0) {
+        if (j === 0) {
           const mainFirst = splitBy(removeTag(replaceBr(t)))
           show.showDay = mainFirst.slice(0, 1)[0].slice(0, -1)
           show.showDate = mainFirst.slice(1, 2)[0]
           show.showTime = mainFirst.slice(3, 4)[0]
           show.exchangeTime = mainFirst.slice(6, 7)[0]
-        } else if (j == 1) {
+        } else if (j === 1) {
           show.title = removeTag(replaceBr(t, ''))
-        } else if (j == 2) {
+        } else if (j === 2) {
           key = splitBy(removeTag(t))[1]
           show.order = {}
-        } else if (j == 3) {
+        } else if (j === 3) {
           const times = splitBy(removeTag(t), ' - ')
           show.order[key] = {}
           show.order[key].start = times[0]
@@ -40,9 +40,9 @@ const getShow = data => {
     } else {
       key = ''
       dataMain.forEach((t, j) => {
-        if (j == 0) {
+        if (j === 0) {
           key = splitBy(removeTag(t))[1]
-        } else if (j == 1) {
+        } else if (j === 1) {
           const times = splitBy(removeTag(t), ' - ')
           show.order[key] = {}
           show.order[key].start = times[0]
@@ -52,7 +52,7 @@ const getShow = data => {
     }
 
     //last
-    if ((i + 1) % 3 == 0) {
+    if ((i + 1) % 3 === 0) {
       result.push(show)
       show = {}
     }
@@ -68,16 +68,17 @@ const getMember = member => {
   main.forEach((m, i) => {
     const splitData = replaceTrailingTd(replaceBr(m))
     const dataMain = splitBy(removeTag(splitData), '\n')
+    const eventMemberList = splitBy(removeTag(replaceTrailingTd(m.split('<br/>')[0])), '\n')[2]
     const parseImgIcon = splitData.match(/<img[^>]+src="([^">]+)"/g)
     const isEvent = parseImgIcon.length > 1
     obj.showDate = dataMain[0].split(' ').slice(0, 2)[1]
     obj.showTime = dataMain[0].split(' ').pop()
-    obj.title = dataMain[1][0] == ' ' ? dataMain[1].slice(1) : dataMain[1]
+    obj.title = dataMain[1][0] === ' ' ? dataMain[1].slice(1) : dataMain[1]
     obj.team = teamParser(splitData)
-    obj.showMember = dataMain[2].split(',').slice(0, -1)
+    obj.showMember = isEvent ? eventMemberList.split(',').slice(0, -1) : dataMain[2].split(',').slice(0, -1)
     obj.isEvent = isEvent
     obj.eventName = isEvent ? eventParser(parseImgIcon[1]) : ''
-    obj.eventMember = isEvent ? dataMain[2].split(',').slice(-2).slice(0, -1)[0].slice(2) : ''
+    obj.eventMember = isEvent ? dataMain[2].split(',').slice(-2).slice(0, -1)[0] : ''
     result.push(obj)
     obj = {}
   })

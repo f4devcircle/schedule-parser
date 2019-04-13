@@ -27,6 +27,7 @@ axios.get('https://jkt48.com/theater/schedule?lang=id')
   })
 
   console.log(show)
+  return;
 })
 .catch(err => {
   console.log(err)
