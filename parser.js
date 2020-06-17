@@ -4,8 +4,12 @@ const {
   getTrTag,
   getTdTag,
   replaceBr,
+  getLinkHref,
   splitBy,
 } = require('./helper')
+const moment = require('moment-timezone')
+moment.tz.setDefault('Asia/Jakarta');
+
 
 const getShow = data => {
   const tr = getTrTag(data)
@@ -21,20 +25,30 @@ const getShow = data => {
         // first
         if (j === 0) {
           const mainFirst = splitBy(removeTag(replaceBr(t)))
+          const showDate = mainFirst.slice(1, 2)[0];
+          const showTime = mainFirst.slice(3, 4)[0];
           show.showDay = mainFirst.slice(0, 1)[0].slice(0, -1)
-          show.showDate = mainFirst.slice(1, 2)[0]
-          show.showTime = mainFirst.slice(3, 4)[0]
+          show.showDate = showDate;
+          show.showTime = showTime;
           show.exchangeTime = mainFirst.slice(6, 7)[0]
+          show.unixTime = moment(`${showDate} ${showTime}`, 'DD.MM.YYYY HH:mm').unix();
         } else if (j === 1) {
-          show.title = removeTag(replaceBr(t, ''))
+          show.showName = removeTag(replaceBr(t, ''))
         } else if (j === 2) {
           key = splitBy(removeTag(t))[1]
           show.order = {}
         } else if (j === 3) {
+          let link = getLinkHref(t) || '';
           const times = splitBy(removeTag(t), ' - ')
+          if (link) {
+            link = link[0].split('')
+            link.pop()
+            link = link.join('')
+          }
           show.order[key] = {}
-          show.order[key].start = times[0]
-          show.order[key].end = times[1]
+          show.order[key].start = showDateParser(times[0])
+          show.order[key].end = showDateParser(times[1])
+          show.order[key].link = link
         }
       })
     } else {
@@ -43,10 +57,17 @@ const getShow = data => {
         if (j === 0) {
           key = splitBy(removeTag(t))[1]
         } else if (j === 1) {
+          let link = getLinkHref(t) || '';
           const times = splitBy(removeTag(t), ' - ')
+          if (link) {
+            link = link[0].split('')
+            link.pop()
+            link = link.join('')
+          }
           show.order[key] = {}
-          show.order[key].start = times[0]
-          show.order[key].end = times[1]
+          show.order[key].start = showDateParser(times[0])
+          show.order[key].end = showDateParser(times[1])
+          show.order[key].link = link
         }
       })
     }
@@ -75,7 +96,7 @@ const getMember = member => {
     obj.showTime = dataMain[0].split(' ').pop()
     obj.title = dataMain[1][0] === ' ' ? dataMain[1].slice(1) : dataMain[1]
     obj.team = teamParser(splitData)
-    obj.showMember = isEvent ? eventMemberList.split(',').slice(0, -1) : dataMain[2].split(',').slice(0, -1)
+    obj.showMembers = isEvent ? eventMemberList.split(',').slice(0, -1) : dataMain[2].split(',').slice(0, -1)
     obj.isEvent = isEvent
     obj.eventName = isEvent ? eventParser(parseImgIcon[1]) : ''
     obj.eventMember = isEvent ? dataMain[2].split(',').slice(-2).slice(0, -1)[0] : ''
@@ -195,6 +216,10 @@ const teamParser = raw => {
       break;
   }
   return result
+}
+
+const showDateParser = string => {
+  return string.split(',')[1].split('WIB')[0].trim();
 }
 
 module.exports = {

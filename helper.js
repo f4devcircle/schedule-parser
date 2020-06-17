@@ -9,6 +9,7 @@ const getBiodata = divs => divs.match(/<div.*class\s*=\s*["'].*bio.*["']\s*>(.*)
 const getTrTag = tr => tr.match(/<tr[\s\S]*?<\/tr>/g)
 const getTdTag = td => td.match(/<td[\s\S]*?<\/td>/g)
 const getDivTag = div => div.match(/<div[\s\S]*?<\/div>/g)
+const getLinkHref = string => string.match(/\/ticket[\s\S]*?"/);
 const replaceBr = (br, replaceTo = ' ') => br.replace(/<br>/g, replaceTo)
 const splitBy = (string, by = ' ') => string.split(by)
 
@@ -26,4 +27,5 @@ module.exports = {
   replaceBr,
   splitBy,
   getBiodata,
+  getLinkHref
 };
